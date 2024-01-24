@@ -1,0 +1,1 @@
+#### Download covid-19 scientific literature dataset from [here](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge) (download metadata.csv) and place it in /data/raw/metadata.csv  

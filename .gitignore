@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+build/*
+milvus_search_system.egg-info/*
+
+#ignore dataset files
+data/raw/*.csv
+data/artifacts/*.csv
+output/Cosine_Sim_results.png
+output/L2_results.png
