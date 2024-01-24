@@ -9,7 +9,7 @@ The setup includes:
 
 Note: be sure to use this script *after* starting your Milvus & Postgres servers
 
-$ python cli/build.py --data_path "/abs/path/to/data.csv" --model_name "text-embedding-ada-002"
+$ python cli/build.py --data_path "/abs/path/to/data.csv" --model_name "text-embedding-ada-002" --openai_api_key "xyz"
 
 """
 
