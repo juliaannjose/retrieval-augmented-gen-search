@@ -11,6 +11,7 @@ from src.model.helpers import generate_openai_embeddings
 from src.milvus.helpers import milvus_collection_creation, milvus_insert_into_db
 from src.postgres.helpers import postgres_table_creation, postgres_insert_into_table
 
+
 def build(arguments):
     """
     This function loads data into Milvus and
@@ -45,16 +46,16 @@ def build(arguments):
         df = preprocess_dataset(df=df)
 
         # embedding generation
-        dense_vectors = generate_openai_embeddings(openai_api_key=_OPENAI_KEY,df=df, column_name="embedding_text", model_name=_NLP_MODEL_NAME)
+        dense_vectors = generate_openai_embeddings(openai_api_key=_OPENAI_KEY, df=df, model_name=_NLP_MODEL_NAME)
         
-        # dumpp embeddings to vector db
+        # dump embeddings to vector db
         milvus_collection_creation(
             collection_name=_MILVUS_COLLECTION_NAME,
             index_name=_MILVUS_INDEX_NAME,
             index_param=_MILVUS_INDEX_PARAM,
         )
         
-        # dumb embedding id to vector db
+        # dump embedding id to vector db
         milvus_ids = milvus_insert_into_db(
             collection_name=_MILVUS_COLLECTION_NAME, dense_vectors=dense_vectors
         )

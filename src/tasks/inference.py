@@ -24,25 +24,16 @@ def inference(arguments):
 
     Returns
     -------
-    postgres_result : dict(dict)
-        a dict of dict containing title, abstract, authors, url 
-        Eg: {"0":
-                {"title":"",
-                "abstract":"",
-                ...
-                ...
-                },
-            "1":
-                {...}
-            }
+    model_response : str
 
     """
+
     # db variables
     _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "sem_search"
     _MILVUS_INDEX_NAME = "Embedding"
     _MILVUS_SEARCH_PARAM = {"metric_type": "IP", "params": {"nprobe": 128}}
 
-    # cli arguments
+    # cli variables
     _NLP_MODEL_NAME = arguments["model_name"]
     _NO_OF_RESULTS = (
         arguments["no_of_results"] if "no_of_results" in arguments else 10
@@ -66,7 +57,7 @@ def inference(arguments):
         milvus_results=milvus_results, table_name=_POSTGRES_TABLE_NAME
     )
     
-    # curate prompt using context from top-k
+    # curate prompt using content from top-k
     prompt = generate_prompt_with_context(postgres_results, _QUERY)
 
     # chat completion
