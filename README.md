@@ -62,5 +62,5 @@ Specify the query using --query argument, the number of results using --no_of_re
 ### For streamlit, use: 
 
 ```
-$ streamlit run api/main.py
+$ python3 -m streamlit run api/main.py -- --openai_api_key "<enter key here>"
 ```

@@ -7,5 +7,6 @@ setup(
     install_requires=[
         "openai==1.9.0",
         "pymilvus",
+        "streamlit==1.30.0"
     ],
 )
