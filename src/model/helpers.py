@@ -99,16 +99,23 @@ def generate_prompt_with_context(top_k_context, query):
 
         # concatenate the "abstracts" of top k articles
         for id, value in top_k_context.items():
+            if value['title'] is not None:
+                context = context + "\n" + "title: " + value['title'] 
             if value['abstract'] is not None:
-                context = context + "\n" + value['abstract'] 
+                context = context + "\n" + "abstract: " + value['abstract'] 
+            if value['url'] is not None:
+                context = context + "\n" + "url: " + value['url'] 
+            context+= "\n\n"
         
         # using this context, ask it to generate an answer to user's query
-        prompt = f"""Answer the following query using only the given context. 
+        prompt = f"""Answer the following query using only the given context (articles). Give a response based on the information given to you. 
+        Finally, at the end, also return url's of the articles that you refered to. 
         
         Context: {context}
         
         Query: {users_query}
         """
+
         return prompt
 
     except Exception as e: 
@@ -145,6 +152,7 @@ def prompt_model(prompt, openai_api_key):
         response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
+            {"role": "system", "content": "You answer questions based on the context given to you."},
             {"role": "user", "content": prompt}
         ]
         )
