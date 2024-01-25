@@ -18,6 +18,7 @@ def postgres_connect():
         host="localhost", port="5438", user="postgres", password="postgres"
     )
     cursor = connection.cursor()
+
     return connection, cursor
 
 
@@ -34,6 +35,7 @@ def postgres_table_creation(table_name):
 
     """
     connection, cursor = postgres_connect()
+
     try:
         delete_query = "drop table " + table_name
         cursor.execute(delete_query)
@@ -72,7 +74,7 @@ def postgres_insert_into_table(table_name, df, corresponding_milvus_ids):
     import os
 
     connection, cursor = postgres_connect()
-    # convert all these pyspark df columns into lists
+    
     titles = list(df["title"].values)
     abstract = list(df["abstract"].values)
     authors = list(df["authors"].values)
@@ -92,6 +94,7 @@ def postgres_insert_into_table(table_name, df, corresponding_milvus_ids):
                     url[i],
                 ]
             )
+
     # insert rows from stdin
     try:
         sql = "COPY " + table_name + " FROM STDIN DELIMITER ',' CSV HEADER"
@@ -136,13 +139,13 @@ def postgres_fetch_metadata(milvus_results, table_name):
             {...}
         }
 
-
     """
     connection, cursor = postgres_connect()
 
     # dict of dict containing title, abstract, authors, url for each result row
     postgres_result = {}
-
+    
+    # indexing and fetching by milvus id 
     milvus_result_ids = [result.id for result in milvus_results]
     fetch_query = (
         "select title, abstract, authors, url from "

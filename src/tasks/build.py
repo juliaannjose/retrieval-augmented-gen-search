@@ -5,7 +5,6 @@ push the vectors into the milvus collection, create a postgres table,
 and store metadata into postgres.
 
 """
-from openai import OpenAI
 
 from src.dataset.helpers import load_dataset, preprocess_dataset
 from src.model.helpers import generate_openai_embeddings

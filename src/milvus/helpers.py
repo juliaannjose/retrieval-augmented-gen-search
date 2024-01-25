@@ -43,15 +43,18 @@ def milvus_collection_creation(collection_name, index_name, index_param):
     milvus_connect()
     if utility.has_collection(collection_name):
         utility.drop_collection(collection_name)
+
     # define key and vector index schema
     key = FieldSchema(name="ID", dtype=DataType.INT64, is_primary=True, auto_id=True)
     field = FieldSchema(
         name=index_name, dtype=DataType.FLOAT_VECTOR, dim=1536, description="vector"
     )
     schema = CollectionSchema(fields=[key, field], description="embedding collection")
+
     # create collection
     collection = Collection(name=collection_name, schema=schema)
     collection.release()
+
     # index creation
     collection.create_index(field_name=index_name, index_params=index_param)
     if utility.has_collection(collection_name) and collection.indexes:
@@ -83,6 +86,7 @@ def milvus_insert_into_db(collection_name, dense_vectors):
     milvus_connect()
     collection = Collection(collection_name)
     all_ids = []
+
     # insertion batch size
     batch_size = 10000
     # insert into collection in batches of [batch_size]
@@ -94,6 +98,7 @@ def milvus_insert_into_db(collection_name, dense_vectors):
     milvus_ids = [item for sublist in all_ids for item in sublist]
     print(f"Inserted all {len(dense_vectors)} vectors into milvus vector database\n")
     collection.flush()
+    
     return milvus_ids
 
 

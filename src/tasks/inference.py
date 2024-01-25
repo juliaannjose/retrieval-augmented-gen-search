@@ -7,7 +7,7 @@ Use this function for inference purposes.
 """
 
 from src.postgres.helpers import postgres_fetch_metadata
-from src.milvus.helpers import milvus_query_results, milvus_query_results_openai
+from src.milvus.helpers import milvus_query_results_openai
 from src.model.helpers import generate_prompt_with_context, prompt_model
 
 
@@ -25,8 +25,16 @@ def inference(arguments):
     Returns
     -------
     postgres_result : dict(dict)
-        a dict of dict containing title,
-        abstract, authors, url
+        a dict of dict containing title, abstract, authors, url 
+        Eg: {"0":
+                {"title":"",
+                "abstract":"",
+                ...
+                ...
+                },
+            "1":
+                {...}
+            }
 
     """
     # db variables

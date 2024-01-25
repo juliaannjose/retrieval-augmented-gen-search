@@ -4,8 +4,6 @@ This module has functions to:
 2. preprocess a pandas dataframe 
 """
 
-import pandas as pd
-
 def load_dataset(filepath):
     """
     This function loads the dataset into a pandas df.
@@ -21,6 +19,9 @@ def load_dataset(filepath):
         csv file loaded into a df
 
     """
+
+    import pandas as pd
+
     try:
         df = pd.read_csv(filepath,header=0)
         print("Dataset Loaded Successfully\n")
@@ -48,6 +49,9 @@ def preprocess_dataset(df):
     df : pd.DataFrame
         the preprocessed dataframe
     """
+    
+    import pandas as pd
+
     try:
         # keep only necessary columns
         cols_to_keep = ["title", "abstract", "authors", "url"]
