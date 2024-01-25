@@ -1,7 +1,7 @@
 """
 Use this module to perform a search against the RAG system
 
-$ python cli/inference.py --query "effect of face coverings for covid" --no_of_results 10 --model_name "multi-qa-MiniLM-L6-cos-v1"
+$ python cli/inference.py --query "effect of face coverings for covid" --no_of_results 10 --model_name "text-embedding-ada-002" --openai_api_key "<enter key here>"
 
 """
 from src.tasks.inference import inference
@@ -19,9 +19,10 @@ def parse_arguments():
     -------
     args : dict
         a dict contaning search paramters
-        { "query":"effect of face coverings for covid",
-          "no_of_results":"10",
-          "model_name":"multi-qa-MiniLM-L6-cos-v1" }
+        { "query":  "effect of face coverings for covid",
+          "no_of_results":  "10",
+          "model_name":  "text-embedding-ada-002",
+           "openai_api_key":  "<enter key here>" }
 
     """
     import argparse
@@ -39,6 +40,12 @@ def parse_arguments():
         type=str,
         required=True,
         help="name of the nlp model for query embedding",
+    )
+    parser.add_argument(
+        "--openai_api_key",
+        type=str,
+        required=True,
+        help="enter your OpenAI api key"
     )
     args = parser.parse_args()
     return vars(args)

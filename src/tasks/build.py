@@ -4,9 +4,6 @@ preprocess it, create vector embeddings, create a milvus collection and an index
 push the vectors into the milvus collection, create a postgres table, 
 and store metadata into postgres.
 
-Use this function when you want to "build" and set up the 
-backend of your search system.
-
 """
 from openai import OpenAI
 
@@ -18,27 +15,23 @@ from src.postgres.helpers import postgres_table_creation, postgres_insert_into_t
 def build(arguments):
     """
     This function loads data into Milvus and
-    Postgres. This is the offline part of this
+    Postgres. This is the "offline" part of this
     search system.
 
     Parameters
     ----------
     arguments : dict
         a dict contaning build arguments
-        {"data_path":"","model_name":""}
-    spark_context : pyspark.context.SparkContext
-    spark_sql : pyspark.sql.context.SQLContext
-        the spark SQLContext used to read the csv
+        {"data_path":"","model_name":"","openai_api_key":""}
 
     """
-    
-    # openai.api_key = "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"
 
-    # variables
+    # cli variables
     _PATH_TO_DATA = arguments["data_path"]
     _NLP_MODEL_NAME = arguments["model_name"]
     _OPENAI_KEY = arguments['openai_api_key']
 
+    # db variables
     _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "sem_search"
     _MILVUS_INDEX_NAME = "Embedding"
     _MILVUS_INDEX_PARAM = {
@@ -48,21 +41,26 @@ def build(arguments):
     }
 
     try:
+        # load and pre-process dataset
         df = load_dataset(filepath=_PATH_TO_DATA)
         df = preprocess_dataset(df=df)
 
+        # embedding generation
         dense_vectors = generate_openai_embeddings(openai_api_key=_OPENAI_KEY,df=df, column_name="embedding_text", model_name=_NLP_MODEL_NAME)
-
+        
+        # dumpp embeddings to vector db
         milvus_collection_creation(
             collection_name=_MILVUS_COLLECTION_NAME,
             index_name=_MILVUS_INDEX_NAME,
             index_param=_MILVUS_INDEX_PARAM,
         )
-
+        
+        # dumb embedding id to vector db
         milvus_ids = milvus_insert_into_db(
             collection_name=_MILVUS_COLLECTION_NAME, dense_vectors=dense_vectors
         )
-
+        
+        # store metadata associated with embeddings in postgres
         postgres_table_creation(table_name=_POSTGRES_TABLE_NAME)
 
         postgres_insert_into_table(

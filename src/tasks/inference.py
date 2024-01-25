@@ -20,29 +20,31 @@ def inference(arguments):
     ----------
     arguments : dict
         a dict contaning search parameters
-        {"query":"","no_of_results":"","model_name":""}
+        {"query":"","no_of_results":"","model_name":"", "openai_api_key":""}
 
     Returns
     -------
-    postgres_result : list(list)
-        a list of lists containing milvus distance, title,
+    postgres_result : dict(dict)
+        a dict of dict containing title,
         abstract, authors, url
 
     """
-    # variables
+    # db variables
     _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "sem_search"
     _MILVUS_INDEX_NAME = "Embedding"
     _MILVUS_SEARCH_PARAM = {"metric_type": "IP", "params": {"nprobe": 128}}
+
+    # cli arguments
     _NLP_MODEL_NAME = arguments["model_name"]
     _NO_OF_RESULTS = (
         arguments["no_of_results"] if "no_of_results" in arguments else 10
-    )  # this arg is optional and has a default value
+    )  # optional with default value 10
     _QUERY = arguments["query"]
+    _OPENAI_KEY = arguments['openai_api_key']
     
-    import openai
-    from openai import OpenAI
+    # ANN search
     milvus_results = milvus_query_results_openai(
-        OpenAI(api_key="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"),
+        openai_api_key=_OPENAI_KEY,
         collection_name=_MILVUS_COLLECTION_NAME,
         index_name=_MILVUS_INDEX_NAME,
         query=_QUERY,
@@ -50,13 +52,16 @@ def inference(arguments):
         search_params=_MILVUS_SEARCH_PARAM,
         k=_NO_OF_RESULTS,
     )
+
+    # metadata for top-k
     postgres_results = postgres_fetch_metadata(
         milvus_results=milvus_results, table_name=_POSTGRES_TABLE_NAME
     )
-
-    #prompt stuff starts here
+    
+    # curate prompt using context from top-k
     prompt = generate_prompt_with_context(postgres_results, _QUERY)
 
+    # chat completion
     model_response = prompt_model(prompt)
 
     return model_response

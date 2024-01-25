@@ -44,7 +44,7 @@ $ python -m pip install .
 Now run the following to build the backend of the search system. Note: you can use any of the embedding models supported by [OpenAI](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings) 
 
 ```
-$ python cli/build.py --data_path "/abs/path/to/data.csv" --model_name "text-embedding-ada-002" --openai_api_key "xyz"
+$ python cli/build.py --data_path "/abs/path/to/data.csv" --model_name "text-embedding-ada-002" --openai_api_key "<enter key here>"
 ``` 
 Specify the absolute path to the dataset using --data_path, the model name using --model_name, and OpenAI API key using --openai_api_key
 
@@ -54,7 +54,7 @@ The inference code has been wrapped as an API and can be called either via comma
 ### For command line, use: 
 
 ```
-$ python cli/inference.py --query "effect of face coverings for covid" --no_of_results 10 --model_name "text-embedding-ada-002" --openai_api_key "xyz"
+$ python cli/inference.py --query "effect of face coverings for covid" --no_of_results 10 --model_name "text-embedding-ada-002" --openai_api_key "<enter key here>"
 ```
 
 Specify the query using --query argument, the number of results using --no_of_results which is an optional argument with a default value of 10 and the model name using --model_name (this should be the same model that was used during backend build time), and OpenAI API key using --openai_api_key
