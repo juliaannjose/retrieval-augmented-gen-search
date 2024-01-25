@@ -37,9 +37,9 @@ def postgres_table_creation(table_name):
     connection, cursor = postgres_connect()
 
     try:
-        delete_query = "drop table " + table_name
-        cursor.execute(delete_query)
-        connection.commit()
+        # delete_query = "drop table if exists " + table_name
+        # cursor.execute(delete_query)
+        # connection.commit()
         create_query = (
             "create table if not exists "
             + table_name

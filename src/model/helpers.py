@@ -32,6 +32,7 @@ def generate_openai_embeddings(openai_api_key, df, model_name="text-embedding-ad
     import time
     import numpy as np
     from openai import OpenAI
+    from tqdm import tqdm
     
     try:
         client = OpenAI(api_key=openai_api_key)
@@ -43,7 +44,7 @@ def generate_openai_embeddings(openai_api_key, df, model_name="text-embedding-ad
 
         # embedding generation time over whole dataset
         start_time = time.time()
-        for index, row in df.iterrows():
+        for index, row in tqdm(df.iterrows(), total=df.shape[0]):
             embedding = get_embeddings(text=row['embedding_text'])
             embeddings_list.append(np.asarray(embedding))
         end_time = time.time()

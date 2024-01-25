@@ -32,7 +32,7 @@ def build(arguments):
     _OPENAI_KEY = arguments['openai_api_key']
 
     # db variables
-    _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "sem_search"
+    _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "rag_search"
     _MILVUS_INDEX_NAME = "Embedding"
     _MILVUS_INDEX_PARAM = {
         "metric_type": "IP",  # IP for inner product and L2 for euclidean

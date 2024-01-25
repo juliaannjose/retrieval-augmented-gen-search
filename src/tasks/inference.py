@@ -29,7 +29,7 @@ def inference(arguments):
     """
 
     # db variables
-    _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "sem_search"
+    _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "rag_search"
     _MILVUS_INDEX_NAME = "Embedding"
     _MILVUS_SEARCH_PARAM = {"metric_type": "IP", "params": {"nprobe": 128}}
 
@@ -61,6 +61,6 @@ def inference(arguments):
     prompt = generate_prompt_with_context(postgres_results, _QUERY)
 
     # chat completion
-    model_response = prompt_model(prompt)
+    model_response = prompt_model(prompt, _OPENAI_KEY)
 
     return model_response
