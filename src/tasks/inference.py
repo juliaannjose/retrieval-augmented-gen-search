@@ -16,7 +16,7 @@ def inference(arguments):
     This function is what will be called at inference
     time. Given a query, it returns search results.
 
-    Parameters
+    Arguments
     ----------
     arguments : dict
         a dict contaning search parameters

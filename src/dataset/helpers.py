@@ -8,7 +8,7 @@ def load_dataset(filepath):
     """
     This function loads the dataset into a pandas df.
 
-    Parameters
+    Arguments
     ----------
     filepath : string
         path to dataset
@@ -39,7 +39,7 @@ def preprocess_dataset(df):
     embedding generation is based on. 
     In this case, the required columns are title & abstract.
 
-    Parameters
+    Arguments
     ----------
     df : pd.DataFrame
         csv file loaded into a df
@@ -49,7 +49,7 @@ def preprocess_dataset(df):
     df : pd.DataFrame
         the preprocessed dataframe
     """
-    
+
     import pandas as pd
 
     try:

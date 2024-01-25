@@ -21,7 +21,7 @@ def milvus_collection_creation(collection_name, index_name, index_param):
     This function creates a milvus collection and
     an index using the given index parameters
 
-    Parameters
+    Arguments
     ----------
     collection_name : string
         name of the collection
@@ -68,7 +68,7 @@ def milvus_insert_into_db(collection_name, dense_vectors):
     This function inserts the dense vectors into
     the milvus collection
 
-    Parameters
+    Arguments
     ----------
     collection_name : string
         milvus collection name
@@ -114,7 +114,7 @@ def milvus_query_results_openai(
     """
     This function lets you query against the milvus vector database
 
-    Parameters
+    Arguments
     ----------
     openai_api_key : string
         openai api key

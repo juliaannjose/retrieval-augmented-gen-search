@@ -28,7 +28,7 @@ def postgres_table_creation(table_name):
     store metadata corresponding to the
     vectors in the milvus vector db
 
-    Parameters
+    Arguments
     ----------
     table_name : string
         name of the postgres table
@@ -60,7 +60,7 @@ def postgres_insert_into_table(table_name, df, corresponding_milvus_ids):
     vector db along with its ids.
     Metadata includes milvus_id, title, abstract, authors, url
 
-    Parameters
+    Arguments
     ----------
     table_name : string
         name of the postgres table
@@ -117,7 +117,7 @@ def postgres_fetch_metadata(milvus_results, table_name):
     eg: to retrieve title, abstract, authors, and url
     corresponding to a milvus result
 
-    Parameters
+    Arguments
     ----------
     milvus_results : list(Tuple)
         a list of tuples containing milvus id and distance of milvus search result

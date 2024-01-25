@@ -18,7 +18,7 @@ def build(arguments):
     Postgres. This is the "offline" part of this
     search system.
 
-    Parameters
+    Arguments
     ----------
     arguments : dict
         a dict contaning build arguments
