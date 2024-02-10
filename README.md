@@ -1,7 +1,7 @@
 # Retrieval Augmented Generation Search System
-This is an example of a search system leveraging retrieval augmented generation techniques to enhance information retrieval and provide contextually relevant results.
+This is an example of a search system leveraging retrieval augmented generation techniques to enhance information retrieval and provide contextually relevant search results.
 
-The example in this repository uses the [CORD (COVID-19 Open Research Dataset) dataset](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge) which is a collection of COVID-19-related scientific papers. 
+The example in this repository uses the [CORD (COVID-19 Open Research Dataset) dataset](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge) which is a collection of COVID-19-related scientific papers, as its knowledge base. 
 
 
 ## Setting up the Backend of the Search System

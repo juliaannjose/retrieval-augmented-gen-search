@@ -1,0 +1,57 @@
+# FROM milvusdb/milvus:v2.2.2 AS milvus
+
+# CMD ["milvus", "run", "standalone"]
+# HEALTHCHECK --start-period=1s --interval=10s --timeout=1s --retries=5 \
+#     CMD curl -f http://localhost:9091/api/v1/health || exit 1
+
+FROM python:3.9-slim
+
+# FROM ubuntu:latest
+# RUN apt-get update && apt-get -y install sudo docker.io
+RUN apt-get update && apt-get install -y curl
+# RUN apt update
+# RUN apt install python3 python3-pip -y wget
+COPY . .
+EXPOSE 19530
+RUN pip install --no-cache-dir  .
+
+# wget https://raw.githubusercontent.com/milvus-io/milvus/master/scripts/standalone_embed.sh
+# COPY standalone_embed.sh standalone_embed.sh
+# RUN chmod +x standalone_embed.sh
+# ENTRYPOINT [ "/bin/bash", "-c" ]
+# CMD ["bash standalone_embed.sh start"]
+
+COPY wait-for-service.sh wait-for-service.sh
+RUN chmod +x wait-for-service.sh
+
+ENTRYPOINT ["./wait-for-service.sh", "http://standalone:9091/healthz"]
+
+# Add the rest of your Dockerfile commands here...
+
+# HEALTHCHECK --interval=60s --timeout=20s --start-period=120s CMD curl -f http://localhost:9091/healthz || exit 1
+
+# RUN sleep 120
+
+
+
+# RUN pip install --no-cache-dir  .
+
+
+# # RUN wget https://github.com/milvus-io/milvus/releases/download/v2.3.5/milvus_2.3.5-1_amd64.deb
+# # RUN dpkg -i milvus_2.3.5-1_amd64.deb
+# # RUN apt-get -f install
+
+# RUN python cli/build.py --data_path "./data/raw/ex_metadata.csv" --model_name "text-embedding-ada-002" --openai_api_key "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"
+
+
+# # Run the application.
+# CMD python -m streamlit run api/main.py -- --openai_api_key "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"
+# CMD ["streamlit", "run", "api/main.py", "--", "--openai_api_key", "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"]
+
+
+# COPY wait-for-it.sh wait-for-it.sh 
+# RUN chmod +x wait-for-it.sh
+
+# ENTRYPOINT [ "/bin/bash", "-c" ]
+# CMD ["python cli/build.py --data_path '/data/raw/ex_metadata.csv' --model_name 'text-embedding-ada-002' --openai_api_key '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'"]
+# CMD ["python", "cli/build.py", "--data_path", "/data/raw/ex_metadata.csv", "--model_name", "text-embedding-ada-002", "--openai_api_key", "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"]

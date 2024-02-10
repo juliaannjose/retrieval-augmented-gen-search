@@ -42,10 +42,7 @@ def parse_arguments():
         help="name of the nlp model for query embedding",
     )
     parser.add_argument(
-        "--openai_api_key",
-        type=str,
-        required=True,
-        help="enter your OpenAI api key"
+        "--openai_api_key", type=str, required=True, help="enter your OpenAI api key"
     )
     args = parser.parse_args()
     return vars(args)
