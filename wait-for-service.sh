@@ -14,7 +14,7 @@ wait_for_service() {
             echo "Service is available"
             return 0
         fi
-        echo "Service is not available yet. Retrying in $interval seconds..."
+        echo "Service is not available yet. Retrying in $interval second(s)..."
         sleep $interval
         counter=$((counter+1))
     done
@@ -23,8 +23,7 @@ wait_for_service() {
     exit 1
 }
 
-# Call the function with the URL of the service
 wait_for_service "$1"
 
-# Execute the Python command
-exec python cli/build.py --data_path "/data/raw/ex_metadata.csv" --model_name "text-embedding-ada-002" --openai_api_key "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"
+shift
+exec "$@"
