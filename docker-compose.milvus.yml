@@ -3,6 +3,7 @@ version: '3.5'
 services:
   frontend:
     environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
       MILVUS_HOST: standalone
     build:
       context: .
@@ -14,6 +15,7 @@ services:
 
   backend:
     environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
       MILVUS_HOST: standalone
     build:
       context: .

@@ -1,3 +1,4 @@
+ARG OPENAI_API_KEY 
 FROM python:3.9-slim
 
 RUN apt-get update && apt-get install -y curl
@@ -13,4 +14,4 @@ RUN chmod +x wait-for-service.sh
 
 ENTRYPOINT ["./wait-for-service.sh", "http://standalone:9091/healthz"]
 
-CMD python cli/build.py --data_path /data/raw/ex_metadata.csv --model_name text-embedding-ada-002 --openai_api_key <enter key here>
+CMD python cli/build.py --data_path /data/raw/ex_metadata.csv --model_name text-embedding-ada-002 --openai_api_key ${OPENAI_API_KEY}
