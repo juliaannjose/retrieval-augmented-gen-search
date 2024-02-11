@@ -15,7 +15,7 @@ $ git clone https://github.com/juliaannjose/retrieval-augmented-gen-search.git
 
 Obtain an API key from [openai](https://openai.com/blog/openai-api) for docker build below.
 ```
-$ OPENAI_API_KEY="enter-key-here" docker-compose -f docker-compose.milvus.yml up
+$ OPENAI_API_KEY="enter-key-here" docker-compose -f docker-compose.yml up
 ```
 
 
