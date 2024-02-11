@@ -13,4 +13,4 @@ RUN chmod +x wait-for-service.sh
 
 ENTRYPOINT ["./wait-for-service.sh", "http://standalone:9091/healthz"]
 
-CMD ["python", "cli/build.py", "--data_path", "/data/raw/ex_metadata.csv", "--model_name", "text-embedding-ada-002", "--openai_api_key", "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"]
+CMD python cli/build.py --data_path /data/raw/ex_metadata.csv --model_name text-embedding-ada-002 --openai_api_key <enter key here>
