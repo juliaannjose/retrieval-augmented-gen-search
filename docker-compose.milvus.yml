@@ -1,15 +1,17 @@
 version: '3.5'
 
 services:
-  # frontend:
-  #   environment:
-  #     MILVUS_HOST: standalone
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.backend
-  #   depends_on:
-  #     standalone:
-  #       condition: service_healthy
+  frontend:
+    environment:
+      MILVUS_HOST: standalone
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+
   backend:
     environment:
       MILVUS_HOST: standalone
