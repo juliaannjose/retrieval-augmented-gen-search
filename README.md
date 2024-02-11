@@ -1,10 +1,25 @@
 # Retrieval Augmented Generation Search System
-This is an example of a search system leveraging retrieval augmented generation techniques to enhance information retrieval and provide contextually relevant results.
+This is an example of a search system leveraging retrieval augmented generation techniques to enhance information retrieval and provide contextually relevant search results.
 
-The example in this repository uses the [CORD (COVID-19 Open Research Dataset) dataset](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge) which is a collection of COVID-19-related scientific papers. 
+The example in this repository uses the [CORD (COVID-19 Open Research Dataset) dataset](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge) which is a collection of COVID-19-related scientific papers, as its knowledge base. 
 
 
-## Setting up the Backend of the Search System
+## Install using Docker
+The easiest way to setup the backend and the inference UI is by using docker (skip to next section if you want a manual build).
+
+Make sure you have [docker](https://docs.docker.com/get-docker/) installed.
+
+```
+$ git clone https://github.com/juliaannjose/retrieval-augmented-gen-search.git
+```
+
+Obtain an API key from [openai](https://openai.com/blog/openai-api) for docker build below.
+```
+$ OPENAI_API_KEY="enter-key-here" docker-compose -f docker-compose.yml up
+```
+
+
+## Manual Install
 
 ### 1. Download the dataset (metadata.csv) from [here](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge?select=metadata.csv) and place it in /data/raw/metadata.csv 
 

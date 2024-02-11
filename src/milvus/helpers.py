@@ -12,8 +12,15 @@ def milvus_connect():
     Connect to a Milvus Server
     """
     from pymilvus import connections
+    import os
 
-    connections.connect(host="localhost", port="19530")
+    MILVUS_HOST = os.environ["MILVUS_HOST"]
+
+    try:
+        connections.connect(host=MILVUS_HOST, port="19530")
+        print("Successfully connected to Milvus")
+    except Exception as e:
+        print(e)
 
 
 def milvus_collection_creation(collection_name, index_name, index_param):
@@ -41,6 +48,7 @@ def milvus_collection_creation(collection_name, index_name, index_param):
     )
 
     milvus_connect()
+
     if utility.has_collection(collection_name):
         utility.drop_collection(collection_name)
 
@@ -98,7 +106,7 @@ def milvus_insert_into_db(collection_name, dense_vectors):
     milvus_ids = [item for sublist in all_ids for item in sublist]
     print(f"Inserted all {len(dense_vectors)} vectors into milvus vector database\n")
     collection.flush()
-    
+
     return milvus_ids
 
 
@@ -141,10 +149,12 @@ def milvus_query_results_openai(
     from openai import OpenAI
 
     client = OpenAI(api_key=openai_api_key)
-    
+
     # obtain query embedding from OpenAI model
     text = query.replace("\n", " ")
-    query_embedding = client.embeddings.create(input = [text], model=model_name).data[0].embedding 
+    query_embedding = (
+        client.embeddings.create(input=[text], model=model_name).data[0].embedding
+    )
 
     milvus_connect()
     collection = Collection(collection_name)

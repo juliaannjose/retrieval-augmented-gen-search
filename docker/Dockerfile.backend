@@ -1,0 +1,17 @@
+ARG OPENAI_API_KEY 
+FROM python:3.9-slim
+
+RUN apt-get update && apt-get install -y curl
+
+COPY . .
+
+# installing all the required packages
+RUN pip install --no-cache-dir  .
+
+# to build the backend, we need to "wait" for milvus server to start
+COPY docker/wait-for-service.sh docker/wait-for-service.sh
+RUN chmod +x docker/wait-for-service.sh
+
+ENTRYPOINT ["docker/wait-for-service.sh", "http://standalone:9091/healthz"]
+
+CMD python cli/build.py --data_path /data/raw/ex_metadata.csv --model_name text-embedding-ada-002 --openai_api_key ${OPENAI_API_KEY}

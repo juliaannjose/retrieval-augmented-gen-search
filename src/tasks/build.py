@@ -29,7 +29,7 @@ def build(arguments):
     # cli variables
     _PATH_TO_DATA = arguments["data_path"]
     _NLP_MODEL_NAME = arguments["model_name"]
-    _OPENAI_KEY = arguments['openai_api_key']
+    _OPENAI_KEY = arguments["openai_api_key"]
 
     # db variables
     _MILVUS_COLLECTION_NAME = _POSTGRES_TABLE_NAME = "rag_search"
@@ -46,20 +46,22 @@ def build(arguments):
         df = preprocess_dataset(df=df)
 
         # embedding generation
-        dense_vectors = generate_openai_embeddings(openai_api_key=_OPENAI_KEY, df=df, model_name=_NLP_MODEL_NAME)
-        
+        dense_vectors = generate_openai_embeddings(
+            openai_api_key=_OPENAI_KEY, df=df, model_name=_NLP_MODEL_NAME
+        )
+
         # dump embeddings to vector db
         milvus_collection_creation(
             collection_name=_MILVUS_COLLECTION_NAME,
             index_name=_MILVUS_INDEX_NAME,
             index_param=_MILVUS_INDEX_PARAM,
         )
-        
+
         # dump embedding id to vector db
         milvus_ids = milvus_insert_into_db(
             collection_name=_MILVUS_COLLECTION_NAME, dense_vectors=dense_vectors
         )
-        
+
         # store metadata associated with embeddings in postgres
         postgres_table_creation(table_name=_POSTGRES_TABLE_NAME)
 

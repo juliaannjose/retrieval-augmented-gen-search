@@ -15,7 +15,7 @@ def postgres_connect():
     import psycopg2
 
     connection = psycopg2.connect(
-        host="localhost", port="5438", user="postgres", password="postgres"
+        host="postgres", port="5432", user="postgres", password="postgres"
     )
     cursor = connection.cursor()
 
@@ -74,7 +74,7 @@ def postgres_insert_into_table(table_name, df, corresponding_milvus_ids):
     import os
 
     connection, cursor = postgres_connect()
-    
+
     titles = list(df["title"].values)
     abstract = list(df["abstract"].values)
     authors = list(df["authors"].values)
@@ -128,7 +128,7 @@ def postgres_fetch_metadata(milvus_results, table_name):
     -------
     postgres_result : dict(dict)
         a dict of dict containing title,
-        abstract, authors, url 
+        abstract, authors, url
         {"0":
             {"title":"",
             "abstract":"",
@@ -144,8 +144,8 @@ def postgres_fetch_metadata(milvus_results, table_name):
 
     # dict of dict containing title, abstract, authors, url for each result row
     postgres_result = {}
-    
-    # indexing and fetching by milvus id 
+
+    # indexing and fetching by milvus id
     milvus_result_ids = [result.id for result in milvus_results]
     fetch_query = (
         "select title, abstract, authors, url from "
@@ -158,10 +158,10 @@ def postgres_fetch_metadata(milvus_results, table_name):
     for id, rows in enumerate(all_rows):
         id_result = {}
         if len(rows):
-            id_result['title'] = rows[0]
-            id_result['abstract'] = rows[1]
-            id_result['authors'] = rows[2]
-            id_result['url'] = rows[3]
+            id_result["title"] = rows[0]
+            id_result["abstract"] = rows[1]
+            id_result["authors"] = rows[2]
+            id_result["url"] = rows[3]
             postgres_result[id] = id_result
-            
+
     return postgres_result
