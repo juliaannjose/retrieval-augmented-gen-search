@@ -9,9 +9,9 @@ COPY . .
 RUN pip install --no-cache-dir  .
 
 # to build the backend, we need to "wait" for milvus server to start
-COPY wait-for-service.sh wait-for-service.sh
-RUN chmod +x wait-for-service.sh
+COPY docker/wait-for-service.sh docker/wait-for-service.sh
+RUN chmod +x docker/wait-for-service.sh
 
-ENTRYPOINT ["./wait-for-service.sh", "http://standalone:9091/healthz"]
+ENTRYPOINT ["docker/wait-for-service.sh", "http://standalone:9091/healthz"]
 
 CMD python cli/build.py --data_path /data/raw/ex_metadata.csv --model_name text-embedding-ada-002 --openai_api_key ${OPENAI_API_KEY}

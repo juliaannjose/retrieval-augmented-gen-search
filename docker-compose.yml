@@ -7,7 +7,7 @@ services:
       MILVUS_HOST: standalone
     build:
       context: .
-      dockerfile: Dockerfile.frontend
+      dockerfile: docker/Dockerfile.frontend
     ports:
       - "8501:8501"
     depends_on:
@@ -19,7 +19,7 @@ services:
       MILVUS_HOST: standalone
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: docker/Dockerfile.backend
     depends_on:
       standalone:
         condition: service_healthy
